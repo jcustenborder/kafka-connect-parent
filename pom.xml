@@ -121,18 +121,39 @@
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>2.6</version>
-                <configuration>
-                    <descriptorRefs>
-                        <descriptorRef>package</descriptorRef>
-                    </descriptorRefs>
-                </configuration>
                 <executions>
                     <execution>
-                        <id>make-assembly</id>
+                        <id>assembly-single-package</id>
                         <phase>package</phase>
                         <goals>
                             <goal>single</goal>
                         </goals>
+                        <configuration>
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <descriptorRefs>
+                                <descriptorRef>package</descriptorRef>
+                            </descriptorRefs>
+                            <formats>
+                                <format>tar.gz</format>
+                            </formats>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>assembly-single-dir</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <finalName>kafka-connect-target</finalName>
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <descriptorRefs>
+                                <descriptorRef>package</descriptorRef>
+                            </descriptorRefs>
+                            <formats>
+                                <format>dir</format>
+                            </formats>
+                        </configuration>
                     </execution>
                 </executions>
                 <dependencies>

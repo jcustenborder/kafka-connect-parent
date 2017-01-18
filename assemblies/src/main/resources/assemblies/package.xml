@@ -21,10 +21,6 @@
           http://maven.apache.org/xsd/assembly-1.1.2.xsd">
     <!-- Assembles a packaged version targeting OS installation. -->
     <id>package</id>
-    <formats>
-        <format>dir</format>
-        <format>tar.gz</format>
-    </formats>
     <includeBaseDirectory>false</includeBaseDirectory>
     <fileSets>
         <fileSet>
