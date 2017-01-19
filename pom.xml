@@ -243,10 +243,155 @@
                     </excludes>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>se.bjurr.gitchangelog</groupId>
+                <artifactId>git-changelog-maven-plugin</artifactId>
+                <version>1.38</version>
+                <executions>
+                    <execution>
+                        <id>GenerateGitChangelogMinimal</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>git-changelog</goal>
+                        </goals>
+                        <configuration>
+                            <filePath>${project.build.directory}/CHANGELOG.md</filePath>
+                            <templateContent>
+{{#tags}}
+## {{name}}
+{{#issues}}
+{{#hasIssue}}
+{{#hasLink}}
+### {{name}} [{{issue}}]({{link}}) {{title}}
+{{/hasLink}}
+{{^hasLink}}
+### {{name}} {{issue}} {{title}}
+{{/hasLink}}
+{{/hasIssue}}
+{{^hasIssue}}
+### {{name}}
+{{/hasIssue}}
+
+{{#commits}}
+**{{{messageTitle}}}**
+
+{{#messageBodyItems}}
+* {{.}}
+{{/messageBodyItems}}
+
+[{{hash}}](${project.url}/commit/{{hash}}) {{authorName}} *{{commitTime}}*
+
+{{/commits}}
+
+{{/issues}}
+{{/tags}}
+                            </templateContent>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
     <profiles>
+        <profile>
+            <id>github</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.6</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                                <configuration>
+                                    <keyname>${gpg.keyname}</keyname>
+                                    <passphraseServerId>${gpg.keyname}</passphraseServerId>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>de.jutzig</groupId>
+                        <artifactId>github-release-plugin</artifactId>
+                        <version>1.1.1</version>
+                        <executions>
+                            <execution>
+                                <id>deploy-to-github</id>
+                                <phase>deploy</phase>
+                                <goals>
+                                    <goal>release</goal>
+                                </goals>
+                                <configuration>
+                                    <description>${project.version}</description>
+                                    <releaseName>${project.version}</releaseName>
+                                    <tag>${project.version}</tag>
+                                    <artifact>
+                                        ${project.build.directory}/${project.artifactId}-${project.version}.tar.gz
+                                    </artifact>
+                                    <!-- If your project has additional artifacts, such as ones produced by
+                                         the maven-assembly-plugin, you can define the following
+                                         (requires version 1.1.1 of the plugin or higher): -->
+                                    <fileSets>
+                                        <fileSet>
+                                            <directory>${project.build.directory}</directory>
+                                            <includes>
+                                                <include>${project.artifactId}*.tar.gz.asc</include>
+                                                <include>${project.artifactId}*.rpm</include>
+                                                <include>${project.artifactId}*.rpm.asc</include>
+                                                <include>${project.artifactId}*.deb</include>
+                                                <include>${project.artifactId}*.deb.asc</include>
+                                            </includes>
+                                        </fileSet>
+                                    </fileSets>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <!-- We need distributionManagement but we don't actually want to use it -->
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                        <version>1.6.7</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <!--<serverId>oss.sonatype.org</serverId>-->
+                            <!--<nexusUrl>https://oss.sonatype.org/</nexusUrl>-->
+                            <!--<description>${project.version}</description>-->
+                            <skipRemoteStaging>true</skipRemoteStaging>
+                            <skipStaging>true</skipStaging>
+                            <skipLocalStaging>true</skipLocalStaging>
+                            <skipNexusStagingDeployMojo>true</skipNexusStagingDeployMojo>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>deploy-to-sonatype</id>
+                                <phase>deploy</phase>
+                                <goals>
+                                    <!--<goal>deploy</goal>-->
+                                    <!--<goal>release</goal>-->
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+            <distributionManagement>
+                <repository>
+                    <id>oss.sonatype.org</id>
+                    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+                </repository>
+                <snapshotRepository>
+                    <id>oss.sonatype.org</id>
+                    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+                </snapshotRepository>
+            </distributionManagement>
+        </profile>
         <profile>
             <id>maven-central</id>
             <build>
