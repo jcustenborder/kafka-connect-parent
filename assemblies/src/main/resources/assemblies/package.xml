@@ -25,14 +25,14 @@
     <fileSets>
         <fileSet>
             <directory>${project.build.directory}</directory>
-            <outputDirectory>share/doc/${project.name}/</outputDirectory>
+            <outputDirectory>usr/share/doc/${project.name}/</outputDirectory>
             <includes>
                 <include>CHANGELOG*</include>
             </includes>
         </fileSet>
         <fileSet>
             <directory>${project.basedir}</directory>
-            <outputDirectory>share/doc/${project.name}/</outputDirectory>
+            <outputDirectory>usr/share/doc/${project.name}/</outputDirectory>
             <includes>
                 <include>README*</include>
                 <include>LICENSE*</include>
@@ -50,12 +50,9 @@
     </fileSets>
     <dependencySets>
         <dependencySet>
-            <outputDirectory>share/java/${project.name}</outputDirectory>
+            <outputDirectory>usr/share/java/${project.name}</outputDirectory>
             <useProjectArtifact>true</useProjectArtifact>
             <useTransitiveFiltering>true</useTransitiveFiltering>
-            <excludes>
-                <exclude>org.apache.kafka:connect-api</exclude>
-            </excludes>
         </dependencySet>
     </dependencySets>
 </assembly>
