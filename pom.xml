@@ -17,6 +17,11 @@
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0">
     <modelVersion>4.0.0</modelVersion>
+
+    <prerequisites>
+        <maven>3.3.0</maven>
+    </prerequisites>
+
     <groupId>com.github.jcustenborder.kafka.connect</groupId>
     <artifactId>kafka-connect-parent</artifactId>
     <version>0.10.1.0-cp1</version>
@@ -131,6 +136,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
+                <version>3.0.2</version>
                 <configuration>
                     <archive>
                         <manifest>
@@ -257,34 +263,34 @@
                         <configuration>
                             <filePath>${project.build.directory}/CHANGELOG.md</filePath>
                             <templateContent>
-{{#tags}}
-## {{name}}
-{{#issues}}
-{{#hasIssue}}
-{{#hasLink}}
-### {{name}} [{{issue}}]({{link}}) {{title}}
-{{/hasLink}}
-{{^hasLink}}
-### {{name}} {{issue}} {{title}}
-{{/hasLink}}
-{{/hasIssue}}
-{{^hasIssue}}
-### {{name}}
-{{/hasIssue}}
+                                {{#tags}}
+                                ## {{name}}
+                                {{#issues}}
+                                {{#hasIssue}}
+                                {{#hasLink}}
+                                ### {{name}} [{{issue}}]({{link}}) {{title}}
+                                {{/hasLink}}
+                                {{^hasLink}}
+                                ### {{name}} {{issue}} {{title}}
+                                {{/hasLink}}
+                                {{/hasIssue}}
+                                {{^hasIssue}}
+                                ### {{name}}
+                                {{/hasIssue}}
 
-{{#commits}}
-**{{{messageTitle}}}**
+                                {{#commits}}
+                                **{{{messageTitle}}}**
 
-{{#messageBodyItems}}
-* {{.}}
-{{/messageBodyItems}}
+                                {{#messageBodyItems}}
+                                * {{.}}
+                                {{/messageBodyItems}}
 
-[{{hash}}](${project.url}/commit/{{hash}}) {{authorName}} *{{commitTime}}*
+                                [{{hash}}](${project.url}/commit/{{hash}}) {{authorName}} *{{commitTime}}*
 
-{{/commits}}
+                                {{/commits}}
 
-{{/issues}}
-{{/tags}}
+                                {{/issues}}
+                                {{/tags}}
                             </templateContent>
                         </configuration>
                     </execution>
