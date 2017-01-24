@@ -263,34 +263,34 @@
                         <configuration>
                             <filePath>${project.build.directory}/CHANGELOG.md</filePath>
                             <templateContent>
-                                {{#tags}}
-                                ## {{name}}
-                                {{#issues}}
-                                {{#hasIssue}}
-                                {{#hasLink}}
-                                ### {{name}} [{{issue}}]({{link}}) {{title}}
-                                {{/hasLink}}
-                                {{^hasLink}}
-                                ### {{name}} {{issue}} {{title}}
-                                {{/hasLink}}
-                                {{/hasIssue}}
-                                {{^hasIssue}}
-                                ### {{name}}
-                                {{/hasIssue}}
+{{#tags}}
+## {{name}}
+{{#issues}}
+{{#hasIssue}}
+{{#hasLink}}
+### {{name}} [{{issue}}]({{link}}) {{title}}
+{{/hasLink}}
+{{^hasLink}}
+### {{name}} {{issue}} {{title}}
+{{/hasLink}}
+{{/hasIssue}}
+{{^hasIssue}}
+### {{name}}
+{{/hasIssue}}
 
-                                {{#commits}}
-                                **{{{messageTitle}}}**
+{{#commits}}
+**{{{messageTitle}}}**
 
-                                {{#messageBodyItems}}
-                                * {{.}}
-                                {{/messageBodyItems}}
+{{#messageBodyItems}}
+* {{.}}
+{{/messageBodyItems}}
 
-                                [{{hash}}](${project.url}/commit/{{hash}}) {{authorName}} *{{commitTime}}*
+[{{hash}}](${project.url}/commit/{{hash}}) {{authorName}} *{{commitTime}}*
 
-                                {{/commits}}
+{{/commits}}
 
-                                {{/issues}}
-                                {{/tags}}
+{{/issues}}
+{{/tags}}
                             </templateContent>
                         </configuration>
                     </execution>
