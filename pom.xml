@@ -81,9 +81,9 @@
             <version>${guava.version}</version>
         </dependency>
         <dependency>
-            <groupId>io.confluent.kafka</groupId>
+            <groupId>com.github.jcustenborder.kafka.connect</groupId>
             <artifactId>connect-utils</artifactId>
-            <version>[0.1.14,0.1.100)</version>
+            <version>[0.2.31,0.2.1000)</version>
         </dependency>
         <dependency>
             <groupId>org.apache.kafka</groupId>
