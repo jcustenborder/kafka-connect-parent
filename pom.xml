@@ -83,7 +83,7 @@
         <dependency>
             <groupId>com.github.jcustenborder.kafka.connect</groupId>
             <artifactId>connect-utils</artifactId>
-            <version>[0.2.31,0.2.1000)</version>
+            <version>[0.2.33,0.2.1000)</version>
         </dependency>
         <dependency>
             <groupId>org.apache.kafka</groupId>
@@ -93,6 +93,12 @@
         </dependency>
 
 
+        <dependency>
+            <groupId>com.github.jcustenborder.kafka.connect</groupId>
+            <artifactId>connect-utils-testing</artifactId>
+            <version>[0.2.33,0.2.1000)</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
