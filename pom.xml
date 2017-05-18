@@ -238,6 +238,7 @@
                             <failsOnError>true</failsOnError>
                             <includeResources>false</includeResources>
                             <includeTestResources>false</includeTestResources>
+                            <sourceDirectory>${project.build.sourceDirectory}</sourceDirectory>
                         </configuration>
                         <goals>
                             <goal>check</goal>
