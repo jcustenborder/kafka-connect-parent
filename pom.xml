@@ -40,7 +40,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <kafka.version>${project.version}</kafka.version>
+        <kafka.version>0.10.2.1-cp1</kafka.version>
         <guava.version>18.0</guava.version>
         <mockito.version>2.6.3</mockito.version>
         <junit.version>5.0.0-M4</junit.version>
