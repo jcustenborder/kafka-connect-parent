@@ -41,7 +41,9 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <kafka.version>0.10.2.1-cp1</kafka.version>
-        <guava.version>18.0</guava.version>
+        <guava.version>20.0</guava.version>
+        <reflections.version>0.9.11</reflections.version>
+        <jackson.version>2.8.5</jackson.version>
         <mockito.version>2.6.3</mockito.version>
         <junit.version>5.0.0-M4</junit.version>
         <junit.surefire.plugin.version>1.0.0-M4</junit.surefire.plugin.version>
@@ -79,9 +81,22 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.reflections</groupId>
+            <artifactId>reflections</artifactId>
+            <version>${reflections.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>${guava.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.github.jcustenborder.kafka.connect</groupId>
