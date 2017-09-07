@@ -25,7 +25,7 @@
 
     <groupId>com.github.jcustenborder.kafka.connect</groupId>
     <artifactId>kafka-connect-parent</artifactId>
-    <version>0.10.2.1-cp2</version>
+    <version>0.11.0.0-cp1</version>
     <packaging>pom</packaging>
     <name>kafka-connect-parent</name>
     <inceptionYear>2017</inceptionYear>
@@ -35,18 +35,25 @@
     <modules>
         <module>checkstyle</module>
         <module>assemblies</module>
+        <module>guava</module>
+        <module>jackson</module>
     </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <kafka.version>0.10.2.1-cp2</kafka.version>
+        <kafka.version>0.11.0.0-cp1</kafka.version>
         <guava.version>20.0</guava.version>
         <reflections.version>0.9.11</reflections.version>
         <jackson.version>2.8.5</jackson.version>
+        <jetty.version>9.2.15.v20160210</jetty.version>
+        <jersey.version>2.24</jersey.version>
+
         <mockito.version>2.6.3</mockito.version>
-        <junit.version>5.0.0-M4</junit.version>
-        <junit.surefire.plugin.version>1.0.0-M4</junit.surefire.plugin.version>
+        <junit.version>5.0.0-M5</junit.version>
+        <junit.surefire.plugin.version>1.0.0-M5</junit.surefire.plugin.version>
+        <surefire.version>2.19.1</surefire.version>
+        <failsafe.version>2.19.1</failsafe.version>
     </properties>
 
     <url>https://github.com/jcustenborder/kafka-connect-parent</url>
@@ -81,21 +88,169 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.github.jcustenborder.kafka.connect</groupId>
+            <artifactId>jackson-repackaged</artifactId>
+            <version>2.8.5</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.jcustenborder.kafka.connect</groupId>
+            <artifactId>guava-repackaged</artifactId>
+            <version>20.0</version>
+        </dependency>
+
+        <!-- Jetty -->
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-continuation</artifactId>
+            <version>${jetty.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-http</artifactId>
+            <version>${jetty.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-io</artifactId>
+            <version>${jetty.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-security</artifactId>
+            <version>${jetty.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-server</artifactId>
+            <version>${jetty.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-servlet</artifactId>
+            <version>${jetty.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-servlets</artifactId>
+            <version>${jetty.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-util</artifactId>
+            <version>${jetty.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- Jetty -->
+
+        <!-- Jackson -->
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-core-asl</artifactId>
+            <version>1.9.13</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>${jackson.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>${jackson.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.reflections</groupId>
-            <artifactId>reflections</artifactId>
-            <version>${reflections.version}</version>
+            <groupId>com.fasterxml.jackson.jaxrs</groupId>
+            <artifactId>jackson-jaxrs-base</artifactId>
+            <version>${jackson.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>${guava.version}</version>
+            <groupId>com.fasterxml.jackson.jaxrs</groupId>
+            <artifactId>jackson-jaxrs-json-provider</artifactId>
+            <version>${jackson.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+            <version>1.9.13</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.module</groupId>
+            <artifactId>jackson-module-jaxb-annotations</artifactId>
+            <version>${jackson.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- Jackson -->
+
+        <!-- Jersey -->
+        <dependency>
+            <groupId>org.glassfish.jersey.core</groupId>
+            <artifactId>jersey-client</artifactId>
+            <version>${jersey.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.core</groupId>
+            <artifactId>jersey-common</artifactId>
+            <version>${jersey.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.containers</groupId>
+            <artifactId>jersey-container-servlet</artifactId>
+            <version>${jersey.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.containers</groupId>
+            <artifactId>jersey-container-servlet-core</artifactId>
+            <version>${jersey.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-jaxb</artifactId>
+            <version>${jersey.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.core</groupId>
+            <artifactId>jersey-server</artifactId>
+            <version>${jersey.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- Jersey -->
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.reflections</groupId>
+            <artifactId>reflections</artifactId>
+            <version>${reflections.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -171,7 +326,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.19.1</version>
+                <version>${surefire.version}</version>
                 <dependencies>
                     <dependency>
                         <groupId>org.junit.platform</groupId>
@@ -185,6 +340,27 @@
                         <exclude>**/*IntegrationTest.java</exclude>
                     </excludes>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>${failsafe.version}</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.junit.platform</groupId>
+                        <artifactId>junit-platform-surefire-provider</artifactId>
+                        <version>${junit.surefire.plugin.version}</version>
+                    </dependency>
+                </dependencies>
+                <executions>
+                    <execution>
+                        <phase>integration-test</phase>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -308,46 +484,64 @@
             <plugin>
                 <groupId>se.bjurr.gitchangelog</groupId>
                 <artifactId>git-changelog-maven-plugin</artifactId>
-                <version>1.38</version>
+                <version>1.49</version>
                 <executions>
                     <execution>
-                        <id>GenerateGitChangelogMinimal</id>
+                        <id>git-changelog-markdown</id>
                         <phase>generate-sources</phase>
                         <goals>
                             <goal>git-changelog</goal>
                         </goals>
                         <configuration>
-                            <filePath>${project.build.directory}/CHANGELOG.md</filePath>
-                            <templateContent>
-                                {{#tags}}
-                                ## {{name}}
-                                {{#issues}}
-                                {{#hasIssue}}
-                                {{#hasLink}}
-                                ### {{name}} [{{issue}}]({{link}}) {{title}}
-                                {{/hasLink}}
-                                {{^hasLink}}
-                                ### {{name}} {{issue}} {{title}}
-                                {{/hasLink}}
-                                {{/hasIssue}}
-                                {{^hasIssue}}
-                                ### {{name}}
-                                {{/hasIssue}}
+                            <file>${project.build.directory}/CHANGELOG.md</file>
+                            <templateContent><![CDATA[
+{{#tags}}
+## {{name}}
+{{#issues}}
+{{#hasIssue}}
+{{#hasLink}}
+### {{name}} [{{issue}}]({{link}}) {{title}}
+{{/hasLink}}
+{{^hasLink}}
+### {{name}} {{issue}} {{title}}
+{{/hasLink}}
+{{/hasIssue}}
+{{^hasIssue}}
+### {{name}}
+{{/hasIssue}}
 
-                                {{#commits}}
-                                **{{{messageTitle}}}**
+{{#commits}}
+**{{{messageTitle}}}**
 
-                                {{#messageBodyItems}}
-                                * {{.}}
-                                {{/messageBodyItems}}
+{{#messageBodyItems}}
+* {{.}}
+{{/messageBodyItems}}
 
-                                [{{hash}}](${project.url}/commit/{{hash}}) {{authorName}} *{{commitTime}}*
+[{{hash}}](${project.url}/commit/{{hash}}) {{authorName}} *{{commitTime}}*
 
-                                {{/commits}}
+{{/commits}}
 
-                                {{/issues}}
-                                {{/tags}}
-                            </templateContent>
+{{/issues}}
+{{/tags}}
+                            ]]></templateContent>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>git-changelog-rst</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>git-changelog</goal>
+                        </goals>
+                        <configuration>
+                            <file>${project.build.directory}/docs/changelog.rst</file>
+                            <templateContent><![CDATA[
+.. csv-table::
+    :header: "Date","Commit","Author","Message"
+
+    {{#commits}}
+    "{{commitTime}}","`{{hash}} <${project.url}/commit/{{hash}}>`_","{{authorName}}","{{message}}"
+    {{/commits}}
+                            ]]></templateContent>
                         </configuration>
                     </execution>
                 </executions>
@@ -378,74 +572,6 @@
     </build>
 
     <profiles>
-        <profile>
-            <id>integration-test</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>build-helper-maven-plugin</artifactId>
-                        <version>1.9.1</version>
-                        <executions>
-                            <execution>
-                                <id>add-integration-test-sources</id>
-                                <phase>generate-test-sources</phase>
-                                <goals>
-                                    <goal>add-test-source</goal>
-                                </goals>
-                                <configuration>
-                                    <sources>
-                                        <source>src/integration-test/java</source>
-                                    </sources>
-                                </configuration>
-                            </execution>
-                            <execution>
-                                <id>add-integration-test-resources</id>
-                                <phase>generate-test-resources</phase>
-                                <goals>
-                                    <goal>add-test-resource</goal>
-                                </goals>
-                                <configuration>
-                                    <resources>
-                                        <resource>
-                                            <filtering>true</filtering>
-                                            <directory>src/integration-test/resources</directory>
-                                        </resource>
-                                    </resources>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-failsafe-plugin</artifactId>
-                        <version>2.19</version>
-                        <dependencies>
-                            <dependency>
-                                <groupId>org.junit.platform</groupId>
-                                <artifactId>junit-platform-surefire-provider</artifactId>
-                                <version>${junit.surefire.plugin.version}</version>
-                            </dependency>
-                        </dependencies>
-                        <executions>
-                            <execution>
-                                <id>integration-tests</id>
-                                <goals>
-                                    <goal>integration-test</goal>
-                                    <goal>verify</goal>
-                                </goals>
-                                <configuration>
-                                    <includes>
-                                        <include>**/*IT.java</include>
-                                        <include>**/*IntegrationTest.java</include>
-                                    </includes>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
         <profile>
             <id>maven-central</id>
             <build>
