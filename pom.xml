@@ -86,6 +86,7 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>${jackson.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.reflections</groupId>
@@ -101,7 +102,7 @@
         <dependency>
             <groupId>com.github.jcustenborder.kafka.connect</groupId>
             <artifactId>connect-utils</artifactId>
-            <version>[0.3.33,0.3.1000)</version>
+            <version>[0.2.33,0.2.1000)</version>
         </dependency>
         <dependency>
             <groupId>org.apache.kafka</groupId>
