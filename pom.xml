@@ -33,8 +33,8 @@
     <description>Parent pom for Kafka Connect projects.</description>
 
     <modules>
-        <module>checkstyle</module>
-        <module>assemblies</module>
+        <!--<module>checkstyle</module>
+        <module>assemblies</module>-->
     </modules>
 
     <properties>
