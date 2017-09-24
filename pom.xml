@@ -25,7 +25,7 @@
 
     <groupId>com.github.jcustenborder.kafka.connect</groupId>
     <artifactId>kafka-connect-parent</artifactId>
-    <version>0.11.0.0-cp4</version>
+    <version>0.11.0.0-cp5</version>
     <packaging>pom</packaging>
     <name>kafka-connect-parent</name>
     <inceptionYear>2017</inceptionYear>
@@ -45,6 +45,7 @@
         <reflections.version>0.9.10</reflections.version>
         <jackson.version>2.8.5</jackson.version>
         <connect-utils.version>[0.3.33,0.3.1000)</connect-utils.version>
+        <kafka-connect-style.version>[1.0.0.0,1.0.0.1000)</kafka-connect-style.version>
         <mockito.version>2.6.3</mockito.version>
         <junit.version>5.0.0</junit.version>
         <junit.surefire.plugin.version>1.0.0</junit.surefire.plugin.version>
@@ -277,8 +278,8 @@
                 <dependencies>
                     <dependency>
                         <groupId>com.github.jcustenborder.kafka.connect</groupId>
-                        <artifactId>kafka-connect-assemblies</artifactId>
-                        <version>1.0.0.0</version>
+                        <artifactId>kafka-connect-style-assemblies</artifactId>
+                        <version>${kafka-connect-style.version}</version>
                     </dependency>
                 </dependencies>
             </plugin>
@@ -307,8 +308,8 @@
                 <dependencies>
                     <dependency>
                         <groupId>com.github.jcustenborder.kafka.connect</groupId>
-                        <artifactId>kafka-connect-checkstyle</artifactId>
-                        <version>1.0.0.0</version>
+                        <artifactId>kafka-connect-style-checkstyle</artifactId>
+                        <version>${kafka-connect-style.version}</version>
                     </dependency>
                 </dependencies>
             </plugin>
@@ -317,7 +318,7 @@
                 <artifactId>license-maven-plugin</artifactId>
                 <version>3.0</version>
                 <configuration>
-                    <header>com/mycila/maven/plugin/license/templates/APACHE-2.txt</header>
+                    <header>APACHE-2.txt</header>
                     <properties>
                         <owner>Jeremy Custenborder</owner>
                         <email>jcustenborder@gmail.com</email>
@@ -329,6 +330,13 @@
                         <exclude>src/assembly/**</exclude>
                     </excludes>
                 </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.github.jcustenborder.kafka.connect</groupId>
+                        <artifactId>kafka-connect-style-licensing</artifactId>
+                        <version>${kafka-connect-style.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
             <plugin>
                 <groupId>se.bjurr.gitchangelog</groupId>
