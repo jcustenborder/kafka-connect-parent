@@ -32,11 +32,6 @@
 
     <description>Parent pom for Kafka Connect projects.</description>
 
-    <modules>
-        <!--<module>checkstyle</module>
-        <module>assemblies</module>-->
-    </modules>
-
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
