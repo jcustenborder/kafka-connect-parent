@@ -25,7 +25,7 @@
 
     <groupId>com.github.jcustenborder.kafka.connect</groupId>
     <artifactId>kafka-connect-parent</artifactId>
-    <version>1.1.0-cp2</version>
+    <version>1.1.0-cp3</version>
     <packaging>pom</packaging>
     <name>kafka-connect-parent</name>
     <inceptionYear>2017</inceptionYear>
@@ -43,8 +43,8 @@
         <kafka-connect-style.version>[1.1.0.0,1.1.0.1000)</kafka-connect-style.version>
         <confluent.packaging.plugin.version>[0.9.0,0.9.100)</confluent.packaging.plugin.version>
         <mockito.version>2.6.3</mockito.version>
-        <junit.version>5.0.0</junit.version>
-        <junit.surefire.plugin.version>1.0.0</junit.surefire.plugin.version>
+        <junit.version>5.2.0</junit.version>
+        <junit.surefire.plugin.version>1.2.0</junit.surefire.plugin.version>
         <surefire.version>2.21.0</surefire.version>
         <failsafe.version>2.21.0</failsafe.version>
     </properties>
