@@ -25,7 +25,7 @@
 
     <groupId>com.github.jcustenborder.kafka.connect</groupId>
     <artifactId>kafka-connect-parent</artifactId>
-    <version>2.0.0</version>
+    <version>2.0.0-cp1</version>
     <packaging>pom</packaging>
     <name>kafka-connect-parent</name>
     <inceptionYear>2017</inceptionYear>
@@ -154,54 +154,6 @@
         <pluginManagement>
             <plugins>
                 <plugin>
-                    <artifactId>maven-assembly-plugin</artifactId>
-                    <version>2.6</version>
-                    <executions>
-                        <execution>
-                            <id>assembly-single-package</id>
-                            <phase>package</phase>
-                            <goals>
-                                <goal>single</goal>
-                            </goals>
-                            <configuration>
-                                <appendAssemblyId>false</appendAssemblyId>
-                                <descriptorRefs>
-                                    <descriptorRef>package</descriptorRef>
-                                </descriptorRefs>
-                                <formats>
-                                    <format>tar.gz</format>
-                                </formats>
-                                <tarLongFileMode>posix</tarLongFileMode>
-                            </configuration>
-                        </execution>
-                        <execution>
-                            <id>assembly-single-dir</id>
-                            <phase>package</phase>
-                            <goals>
-                                <goal>single</goal>
-                            </goals>
-                            <configuration>
-                                <attach>false</attach>
-                                <finalName>kafka-connect-target</finalName>
-                                <appendAssemblyId>false</appendAssemblyId>
-                                <descriptorRefs>
-                                    <descriptorRef>package</descriptorRef>
-                                </descriptorRefs>
-                                <formats>
-                                    <format>dir</format>
-                                </formats>
-                            </configuration>
-                        </execution>
-                    </executions>
-                    <dependencies>
-                        <dependency>
-                            <groupId>com.github.jcustenborder.kafka.connect</groupId>
-                            <artifactId>kafka-connect-style-assemblies</artifactId>
-                            <version>${kafka-connect-style.version}</version>
-                        </dependency>
-                    </dependencies>
-                </plugin>
-                <plugin>
                     <groupId>io.confluent</groupId>
                     <artifactId>kafka-connect-maven-plugin</artifactId>
                     <version>0.11.0</version>
@@ -220,19 +172,6 @@
                                 <supportUrl>${project.issueManagement.url}</supportUrl>
                                 <supportSummary>Support provided through community involvement.</supportSummary>
                             </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <groupId>com.github.jcustenborder.kafka.connect</groupId>
-                    <artifactId>kafka-connect-documentation-plugin</artifactId>
-                    <version>0.1.2</version>
-                    <executions>
-                        <execution>
-                            <phase>generate-sources</phase>
-                            <goals>
-                                <goal>documentation</goal>
-                            </goals>
                         </execution>
                     </executions>
                 </plugin>
@@ -284,6 +223,67 @@
                         </manifest>
                     </archive>
                 </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.6</version>
+                <executions>
+                    <execution>
+                        <id>assembly-single-package</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <descriptorRefs>
+                                <descriptorRef>package</descriptorRef>
+                            </descriptorRefs>
+                            <formats>
+                                <format>tar.gz</format>
+                            </formats>
+                            <tarLongFileMode>posix</tarLongFileMode>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>assembly-single-dir</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <attach>false</attach>
+                            <finalName>kafka-connect-target</finalName>
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <descriptorRefs>
+                                <descriptorRef>package</descriptorRef>
+                            </descriptorRefs>
+                            <formats>
+                                <format>dir</format>
+                            </formats>
+                        </configuration>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.github.jcustenborder.kafka.connect</groupId>
+                        <artifactId>kafka-connect-style-assemblies</artifactId>
+                        <version>${kafka-connect-style.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <plugin>
+                <groupId>com.github.jcustenborder.kafka.connect</groupId>
+                <artifactId>kafka-connect-documentation-plugin</artifactId>
+                <version>0.1.2</version>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>documentation</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
