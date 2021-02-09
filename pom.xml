@@ -25,7 +25,7 @@
 
     <groupId>com.github.jcustenborder.kafka.connect</groupId>
     <artifactId>kafka-connect-parent</artifactId>
-    <version>2.6.1</version>
+    <version>2.6.1-1</version>
     <packaging>pom</packaging>
     <name>kafka-connect-parent</name>
     <inceptionYear>2017</inceptionYear>
@@ -36,11 +36,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <kafka.version>2.6.1</kafka.version>
-        <guava.version>29.0-jre</guava.version>
-        <reflections.version>0.9.11</reflections.version>
-        <jackson.version>[2.10.5,)</jackson.version>
-        <connect-utils.version>[0.5.166,0.5.2000)</connect-utils.version>
-        <kafka-connect-style.version>[1.1.0.0,1.1.0.1000)</kafka-connect-style.version>
+        <connect-utils.version>[0.6.166,0.6.2000)</connect-utils.version>
+        <kafka-connect-style.version>[1.1.0,1.1.1000)</kafka-connect-style.version>
         <confluent.hub.packaging.version>0.11.1</confluent.hub.packaging.version>
         <mockito.version>3.5.10</mockito.version>
         <junit.version>5.6.2</junit.version>
@@ -85,22 +82,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>${jackson.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>${guava.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.reflections</groupId>
-            <artifactId>reflections</artifactId>
-            <version>${reflections.version}</version>
-        </dependency>
-        <dependency>
             <groupId>com.github.jcustenborder.kafka.connect</groupId>
             <artifactId>connect-utils</artifactId>
             <version>${connect-utils.version}</version>
@@ -111,8 +92,6 @@
             <version>${kafka.version}</version>
             <scope>provided</scope>
         </dependency>
-
-
         <dependency>
             <groupId>com.github.jcustenborder</groupId>
             <artifactId>docker-compose-junit-extension</artifactId>
@@ -187,6 +166,10 @@
                                 <dockerName>kafka-connect-docker</dockerName>
                                 <supportUrl>${project.issueManagement.url}</supportUrl>
                                 <supportSummary>Support provided through community involvement.</supportSummary>
+                                <excludes>
+                                    <exclude>com.google.guava:guava</exclude>
+                                    <exclude>com.fasterxml.jackson.core:jackson-databind</exclude>
+                                </excludes>
                             </configuration>
                         </execution>
                     </executions>
@@ -194,6 +177,7 @@
             </plugins>
         </pluginManagement>
         <plugins>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
