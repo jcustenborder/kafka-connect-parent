@@ -8,8 +8,12 @@ on:
     branches:
       - master
 
+permissions:
+  contents: read
+
 jobs:
   verify:
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -24,3 +28,68 @@ jobs:
 
       - name: Verify
         run: mvn -B clean verify
+
+  release:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Java and Maven Central credentials
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+          server-id: central
+          server-username: CENTRAL_USERNAME
+          server-password: CENTRAL_TOKEN
+          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
+          gpg-passphrase: GPG_PASSPHRASE
+
+      - name: Read Maven version
+        id: release_version
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          release_version="$(mvn -q -DforceStdout help:evaluate -Dexpression=project.version)"
+          if [[ -z "${release_version}" ]]; then
+            echo "Root project version is empty." >&2
+            exit 1
+          fi
+          if [[ "${release_version}" == *-SNAPSHOT ]]; then
+            echo "Root project version must not be a snapshot. Found: ${release_version}" >&2
+            exit 1
+          fi
+
+          git fetch --tags --force
+          if git rev-parse -q --verify "refs/tags/${release_version}" >/dev/null; then
+            echo "Release tag ${release_version} already exists." >&2
+            exit 1
+          fi
+
+          echo "version=${release_version}" >> "${GITHUB_OUTPUT}"
+          echo "Release version: ${release_version}"
+
+      - name: Deploy to Maven Central
+        env:
+          CENTRAL_USERNAME: ${{ secrets.CENTRAL_USERNAME }}
+          CENTRAL_TOKEN: ${{ secrets.CENTRAL_TOKEN }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+          GPG_KEYNAME: ${{ secrets.GPG_KEYNAME }}
+        run: mvn -B -Pmaven-central -Dgpg.keyname="${GPG_KEYNAME}" clean deploy
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${{ steps.release_version.outputs.version }}" \
+            --target "${GITHUB_SHA}" \
+            --title "${{ steps.release_version.outputs.version }}" \
+            --generate-notes
