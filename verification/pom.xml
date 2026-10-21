@@ -1,0 +1,71 @@
+<!--
+
+    Copyright © 2017 Jeremy Custenborder (jcustenborder@gmail.com)
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.github.jcustenborder.kafka.connect</groupId>
+        <artifactId>kafka-connect-parent</artifactId>
+        <version>4.3.1-2</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <groupId>com.github.jcustenborder.kafka.connect</groupId>
+    <artifactId>parent-verification</artifactId>
+    <version>4.3.1-2</version>
+    <name>parent-verification</name>
+    <description>Consumer exercising the Kafka Connect parent build contract.</description>
+    <!-- The documentation plugin reads raw consumer metadata rather than the effective model. -->
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/jcustenborder/kafka-connect-parent/issues</url>
+    </issueManagement>
+    <scm>
+        <url>https://github.com/jcustenborder/kafka-connect-parent</url>
+        <developerConnection>scm:git:https://github.com/jcustenborder/kafka-connect-parent.git</developerConnection>
+    </scm>
+    <dependencies>
+        <dependency>
+            <groupId>com.github.jcustenborder.kafka.connect</groupId>
+            <artifactId>connect-utils-jackson</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.jcustenborder.kafka.connect</groupId>
+            <artifactId>connect-utils-parser</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>connect-json</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka-clients</artifactId>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>io.confluent</groupId>
+                <artifactId>kafka-connect-maven-plugin</artifactId>
+                <configuration>
+                    <componentTypes>
+                        <componentType>transform</componentType>
+                    </componentTypes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
